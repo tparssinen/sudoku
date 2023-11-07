@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- head content -->
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <h1>Sudoku</h1>
+  <select id="difficulty">
+    <option value="easy">Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
+    <option value="very-hard">Very Hard</option>
+    <option value="insane">Insane</option>
+    <option value="inhuman">Inhuman</option>
+  </select>
+  <button id="newBoard">Start new Sudoku</button>
+  <button id="resetBoard">Reset board</button>
+  <div id="boardElement"></div>
+  <div>Errors made: <span id="errorCount">0</span></div>
+  <div id="timer"></div>
+  <div id="winMessage"></div>
+  <!-- Load main.js -->
+  <script type="module" src="/main.js"></script>
+</body>
+</html>

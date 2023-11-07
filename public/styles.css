@@ -1,0 +1,79 @@
+.board {
+  background-color: #000;
+  width: 540px;
+  max-width: 60vw;
+  max-height: 60vh;
+  aspect-ratio: 1/1;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+}
+
+.cell {
+  aspect-ratio: 1/1;
+  background-color: #fff;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  outline: 1px solid #000;
+  position: relative;
+}
+
+.cell.original {
+  cursor: default;
+}
+
+.cell.highlight {
+  background-color: chartreuse;
+}
+
+.cell:nth-child(3n)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: #000;
+}
+
+.cell:last-child::before {
+  content: none;
+}
+
+.row:nth-child(3n) .cell {
+  box-shadow: 0 -3px 0 #000 inset;
+}
+
+.row:last-child .cell {
+  box-shadow: none;
+}
+
+.cell.false {
+  color: #f00;
+}
+
+.cell.active {
+  outline: 2px solid #00f;
+  z-index: 1;
+}
+
+.cell .value {
+  color: #00f;
+  font-size: 2rem;
+  text-align: center;
+  grid-column: 1 / 4;
+  grid-row: 1 / 4;
+  align-self: center;
+}
+
+.cell.original .value {
+  color: #000;
+}
+
+.cell.incorrect .value {
+  color: #f00;
+}
