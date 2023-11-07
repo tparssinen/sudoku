@@ -16,9 +16,19 @@ class Cell {
 
     this.element.appendChild(this.cellValue);
 
-    this.element.addEventListener('click', this.activate.bind(this));
-    this.element.addEventListener('dblclick', this.highlight.bind(this));
-    window.addEventListener('keydown', this.handleKeyPress.bind(this));
+    // Keep a reference to the event handlers
+    this.activateHandler = this.activate.bind(this);
+    this.highlightHandler = this.highlight.bind(this);
+    this.keyPressHandler = this.handleKeyPress.bind(this);
+
+    // Remove the old event listeners before adding new ones
+    this.element.removeEventListener('click', this.activateHandler);
+    this.element.removeEventListener('dblclick', this.highlightHandler);
+    window.removeEventListener('keydown', this.keyPressHandler);
+
+    this.element.addEventListener('click', this.activateHandler);
+    this.element.addEventListener('dblclick', this.highlightHandler);
+    window.addEventListener('keydown', this.keyPressHandler);
   }
 
   activate() {
@@ -49,7 +59,6 @@ class Cell {
       // Get value from #errorCount element
       const errorCount = document.getElementById('errorCount').innerHTML;
 
-      console.log(this.value, this.correctValue);
       if (this.value !== this.correctValue) {
         this.element.classList.add('incorrect');
 
@@ -66,6 +75,11 @@ class Cell {
       this.cellValue.innerHTML = this.value;
       this.element.classList.remove('incorrect', 'highlight');
     }
+  }
+
+  reset() {
+    // Remove the event listener
+    window.removeEventListener('keydown', this.keyPressHandler);
   }
 }
 

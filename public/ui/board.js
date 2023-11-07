@@ -27,8 +27,8 @@ class Board {
   }
 
   drawBoard() {
+    this.resetCells();
     console.log('Drawing board...');
-    console.log(this.boardData);
     this.boardElement.innerHTML = '';
     this.cells = [];
 
@@ -97,6 +97,11 @@ class Board {
       this.stopTimer();
       this.displayWinMessage();
     }
+  }
+
+  resetCells() {
+    console.log('Resetting cells...');
+    this.cells.forEach(cell => cell.reset());
   }
 
   stopTimer() {
