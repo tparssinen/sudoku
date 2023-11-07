@@ -46,9 +46,21 @@ class Cell {
 
     // if value is not a number, do nothing
     if (value < '1' || value > '9') return;
+
     cells.forEach(cell => {
       const valueToCompare = cell.querySelectorAll('.value')[0].innerHTML;
-      (valueToCompare == value) ? cell.classList.add('highlight') : cell.classList.remove('highlight');
+      const pencilMarksToCompare = cell.querySelectorAll('.pencil-mark');
+
+      if (valueToCompare == value) {
+        cell.classList.add('highlight');
+        cell.classList.remove('pencil-highlight');
+      } else if (Array.from(pencilMarksToCompare).some(mark => mark.innerHTML == value)) {
+        console.log('pencil mark found');
+        cell.classList.add('pencil-highlight');
+        cell.classList.remove('highlight');
+      } else {
+        cell.classList.remove('highlight', 'pencil-highlight');
+      }
     });
   }
 

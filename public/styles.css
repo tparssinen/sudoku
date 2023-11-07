@@ -30,6 +30,10 @@
   background-color: chartreuse;
 }
 
+.cell.pencil-highlight {
+  background-color: #c2ff9b;
+}
+
 .cell:nth-child(3n)::before {
   content: '';
   position: absolute;
