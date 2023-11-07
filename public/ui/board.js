@@ -37,7 +37,8 @@ class Board {
       row.className = 'row';
 
       for (let j = 0; j < 9; j++) {
-        const cell = new Cell(this.boardData[i][j], j, i, this.correctString());
+        const correctValue = this.correctString()[i * 9 + j];
+        const cell = new Cell(this.boardData[i][j], correctValue);
         cell.element.addEventListener('change', (event) => {
           console.log(`Cell value changed to ${event.detail}`);
           this.checkBoard();

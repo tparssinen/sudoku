@@ -1,9 +1,7 @@
 class Cell {
-  constructor(value, col, row, correctString) {
+  constructor(value, correctValue) {
     this.value = value;
-    this.col = col;
-    this.row = row;
-    this.correctString = correctString;
+    this.correctValue = correctValue;
 
     this.cellValue = document.createElement('div');
     this.cellValue.className = 'value';
@@ -51,8 +49,8 @@ class Cell {
       // Get value from #errorCount element
       const errorCount = document.getElementById('errorCount').innerHTML;
 
-      const correctValue = this.correctString[this.row * 9 + this.col];
-      if (this.value !== correctValue) {
+      console.log(this.value, this.correctValue);
+      if (this.value !== this.correctValue) {
         this.element.classList.add('incorrect');
 
         // Increase error count by 1
