@@ -27,33 +27,49 @@ class Board {
   }
 
   drawBoard() {
-    this.resetCells();
-    this.stopTimer();
+    this.resetBoard();
     console.log('Drawing board...');
-    this.boardElement.innerHTML = '';
-    this.cells = [];
 
     for (let i = 0; i < 9; i++) {
-      const row = document.createElement('div');
-      row.className = 'row';
-
-      for (let j = 0; j < 9; j++) {
-        const correctValue = this.correctString()[i * 9 + j];
-        const cell = new Cell(this.boardData[i][j], correctValue);
-        cell.element.addEventListener('change', (event) => {
-          console.log(`Cell value changed to ${event.detail}`);
-          this.checkBoard();
-        });
-        this.cells.push(cell);
-        row.appendChild(cell.element);
-      }
-
+      const row = this.createRow(i);
       this.boardElement.appendChild(row);
     }
 
+    this.startTimer();
+  }
+
+  createRow(rowIndex) {
+    const row = document.createElement('div');
+    row.className = 'row';
+
+    for (let j = 0; j < 9; j++) {
+      const cell = this.createCell(rowIndex, j);
+      this.cells.push(cell);
+      row.appendChild(cell.element);
+    }
+
+    return row;
+  }
+
+  createCell(i, j) {
+    const correctValue = this.correctString()[i * 9 + j];
+    const cell = new Cell(this.boardData[i][j], correctValue);
+    cell.element.addEventListener('change', this.handleCellChange.bind(this));
+    return cell;
+  }
+
+  handleCellChange(event) {
+    console.log(`Cell value changed to ${event.detail}`);
+    this.checkBoard();
+  }
+
+  resetBoard() {
+    this.stopTimer();
+    this.boardElement.innerHTML = '';
+    this.cells.forEach(cell => cell.reset());
+    this.cells = [];
     this.resetErrorCount();
     this.resetWinMessage();
-    this.startTimer();
   }
 
   resetErrorCount() {

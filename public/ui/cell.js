@@ -52,29 +52,43 @@ class Cell {
   }
 
   handleKeyPress(event) {
-    if (this.element.classList.contains('active') && event.key >= '1' && event.key <= '9') {
-      this.value = event.key;
-      this.cellValue.innerHTML = this.value;
+    if (!this.element.classList.contains('active')) return;
 
-      // Get value from #errorCount element
-      const errorCount = document.getElementById('errorCount').innerHTML;
-
-      if (this.value !== this.correctValue) {
-        this.element.classList.add('incorrect');
-
-        // Increase error count by 1
-        document.getElementById('errorCount').innerHTML = Number(errorCount) + 1;
-      } else {
-        this.element.classList.remove('incorrect');
-      }
-
-      const changeEvent = new CustomEvent('change', { detail: this.value });
-      this.element.dispatchEvent(changeEvent);
-    } else if (this.element.classList.contains('active') && event.key === 'Backspace') {
-      this.value = '';
-      this.cellValue.innerHTML = this.value;
-      this.element.classList.remove('incorrect', 'highlight');
+    if (event.key >= '1' && event.key <= '9') {
+      this.updateValue(event.key);
+    } else if (event.key === 'Backspace') {
+      this.clearValue();
     }
+  }
+
+  updateValue(value) {
+    this.value = value;
+    this.cellValue.innerHTML = this.value;
+
+    if (this.value !== this.correctValue) {
+      this.element.classList.add('incorrect');
+      this.updateErrorCount();
+    } else {
+      this.element.classList.remove('incorrect');
+    }
+
+    this.dispatchChangeEvent();
+  }
+
+  clearValue() {
+    this.value = '';
+    this.cellValue.innerHTML = this.value;
+    this.element.classList.remove('incorrect', 'highlight');
+  }
+
+  updateErrorCount() {
+    const errorCountElement = document.getElementById('errorCount');
+    errorCountElement.innerHTML = Number(errorCountElement.innerHTML) + 1;
+  }
+
+  dispatchChangeEvent() {
+    const changeEvent = new CustomEvent('change', { detail: this.value });
+    this.element.dispatchEvent(changeEvent);
   }
 
   reset() {
