@@ -34,7 +34,7 @@ class Cell {
 
   activate() {
     const cells = document.querySelectorAll('.cell');
-    cells.forEach(cell => cell.classList.remove('active', 'highlight'));
+    cells.forEach(cell => cell.classList.remove('active', 'highlight', 'pencil-highlight'));
 
     if (!this.element.classList.contains('original')) this.element.classList.add('active');
   }
