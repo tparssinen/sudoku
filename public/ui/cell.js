@@ -2,6 +2,7 @@ class Cell {
   constructor(value, correctValue) {
     this.value = value;
     this.correctValue = correctValue;
+    this.pencilMarks = [];
 
     this.cellValue = document.createElement('div');
     this.cellValue.className = 'value';
@@ -54,11 +55,45 @@ class Cell {
   handleKeyPress(event) {
     if (!this.element.classList.contains('active')) return;
 
-    if (event.key >= '1' && event.key <= '9') {
-      this.updateValue(event.key);
-    } else if (event.key === 'Backspace') {
-      this.clearValue();
+    // if pencil mark checkbox is checked, add pencil marks
+    if (document.getElementById('pencilMark').checked) {
+      if (event.key >= '1' && event.key <= '9') {
+        this.updatePencilMarks(event.key);
+      } else if (event.key === 'Backspace') {
+        this.clearPencilMarks();
+      }
+      this.drawPencilMarks();
+    } else {
+      if (event.key >= '1' && event.key <= '9') {
+        this.updateValue(event.key);
+      } else if (event.key === 'Backspace') {
+        this.clearValue();
+      }
     }
+  }
+
+  updatePencilMarks(value) {
+    // push value to pencilMarks array if it doesn't already exist
+    if (!this.pencilMarks.includes(value)) {
+      this.pencilMarks.push(value);
+      this.pencilMarks.sort();
+    } else {
+      this.pencilMarks.splice(this.pencilMarks.indexOf(value), 1);
+    }
+  }
+
+  clearPencilMarks() {
+    this.pencilMarks = [];
+  }
+
+  drawPencilMarks() {
+    this.element.querySelectorAll('.pencil-mark').forEach(mark => mark.remove());
+    this.pencilMarks.forEach(mark => {
+      const markElement = document.createElement('span');
+      markElement.className = 'pencil-mark';
+      markElement.innerHTML = mark;
+      this.element.appendChild(markElement);
+    });
   }
 
   updateValue(value) {
@@ -70,6 +105,8 @@ class Cell {
       this.updateErrorCount();
     } else {
       this.element.classList.remove('incorrect');
+      this.clearPencilMarks();
+      this.drawPencilMarks();
     }
 
     this.dispatchChangeEvent();
