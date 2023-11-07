@@ -55,7 +55,6 @@ class Cell {
         cell.classList.add('highlight');
         cell.classList.remove('pencil-highlight');
       } else if (Array.from(pencilMarksToCompare).some(mark => mark.innerHTML == value)) {
-        console.log('pencil mark found');
         cell.classList.add('pencil-highlight');
         cell.classList.remove('highlight');
       } else {
