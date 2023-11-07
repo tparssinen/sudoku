@@ -28,6 +28,7 @@ class Board {
 
   drawBoard() {
     this.resetCells();
+    this.stopTimer();
     console.log('Drawing board...');
     this.boardElement.innerHTML = '';
     this.cells = [];
